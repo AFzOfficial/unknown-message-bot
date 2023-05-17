@@ -1,0 +1,4 @@
+__pycache__
+unknowns.db
+pyrogram.session
+pyrogram.session-journal
