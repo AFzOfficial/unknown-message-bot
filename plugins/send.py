@@ -13,10 +13,10 @@ async def send(client: Client, message: Message):
     reciver_unknown_id = await message.chat.ask('**Enter User ID:**')
     sender_message = await message.chat.ask('**Enter Message : **')
 
-    sender  = get_user_with_real_id(str(message.chat.id))
     reciver = get_user_with_unknown_id(reciver_unknown_id.text)
 
     if reciver:
+        sender  = get_user_with_real_id(str(message.chat.id))
 
         text = f'''**Message From:** `{sender[1] if sender else 'Unknown'}`
 
