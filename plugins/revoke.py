@@ -1,7 +1,7 @@
 # from pyrogram import Client, filters
 # from pyrogram.types import Message
 
-# from models import update_unknown_id, get_unknown_with_real_id
+# from models import update_user_unknown_id, get_user_with_real_id
 # from utilities import md5_hash
 
 
@@ -12,11 +12,11 @@
 # async def revoke(client: Client, message: Message):
 #     user_id = str(message.chat.id)
 
-#     user = get_unknown_with_real_id(user_id)
+#     user = get_user_with_real_id(user_id)
 
 #     if user:
 #         # new_unknown_id = ah Shit ! hashing with md5 not gen a new md5 :| 
-#         update_unknown_id()
+#         update_user_unknown_id()
 
 #     else:
 #         await message.reply('''**You dont have Unknown Id**

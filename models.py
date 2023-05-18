@@ -1,6 +1,6 @@
 import sqlite3
 
-db = 'unknowns.db'
+db = 'users.db'
 
 conn = sqlite3.connect(db)
 
@@ -8,7 +8,7 @@ def init() -> None:
     c = conn.cursor()
 
     c.execute('''
-    CREATE TABLE IF NOT EXISTS unknowns (
+    CREATE TABLE IF NOT EXISTS users (
     
     id               INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     real_id          TEXT NOT NULL,
@@ -27,11 +27,11 @@ init()
 
 
 
-def add_unknown(real_id: str, unknown_id: str) -> bool:
+def add_user(real_id: str, unknown_id: str) -> bool:
     c = conn.cursor()
 
     try:
-        c.execute("INSERT INTO unknowns (real_id, unknown_id) VALUES (?, ?)", (real_id, unknown_id, ))
+        c.execute("INSERT INTO users (real_id, unknown_id) VALUES (?, ?)", (real_id, unknown_id, ))
         conn.commit()
 
         return True
@@ -47,10 +47,10 @@ def add_unknown(real_id: str, unknown_id: str) -> bool:
 
 
 
-def get_unknown_with_real_id(real_id: str) -> tuple:
+def get_user_with_real_id(real_id: str) -> tuple:
     c = conn.cursor()
     try:
-        c.execute(f'SELECT real_id, unknown_id FROM unknowns WHERE real_id = ?', (real_id,))
+        c.execute(f'SELECT real_id, unknown_id FROM users WHERE real_id = ?', (real_id,))
         row = c.fetchone()
 
         return row
@@ -64,10 +64,10 @@ def get_unknown_with_real_id(real_id: str) -> tuple:
 
 
 
-def get_unknown_with_unknown_id(unknown_id: str) -> tuple:
+def get_user_with_unknown_id(unknown_id: str) -> tuple:
     c = conn.cursor()
     try:
-        c.execute(f'SELECT real_id, unknown_id FROM unknowns WHERE unknown_id = ?', (unknown_id,))
+        c.execute(f'SELECT real_id, unknown_id FROM users WHERE unknown_id = ?', (unknown_id,))
         row = c.fetchone()
 
         return row
@@ -83,10 +83,10 @@ def get_unknown_with_unknown_id(unknown_id: str) -> tuple:
 
 
 
-def get_all_unknowns() -> list:
+def get_all_users() -> list:
     c = conn.cursor()
     try:
-        c.execute(f'SELECT id, real_id, unknown_id FROM unknowns ORDER BY id DESC') # LIMIT 100
+        c.execute(f'SELECT id, real_id, unknown_id FROM users ORDER BY id DESC') # LIMIT 100
         rows = c.fetchall()
 
         return rows
@@ -102,15 +102,15 @@ def get_all_unknowns() -> list:
 
 
 
-def delete_unknown_with_real_id(real_id: str) -> bool:
+def delete_user_with_real_id(real_id: str) -> bool:
 
-    if get_unknown_with_real_id(real_id):
+    if get_user_with_real_id(real_id):
 
         c = conn.cursor()
 
         try: 
-            # c.execute(f'DELETE FROM donates') # Delete All
-            c.execute(f'DELETE FROM unknowns WHERE real_id = ?', (real_id, ))
+            # c.execute(f'DELETE FROM users') # Delete All
+            c.execute(f'DELETE FROM users WHERE real_id = ?', (real_id, ))
             conn.commit()
 
             return True
@@ -126,15 +126,14 @@ def delete_unknown_with_real_id(real_id: str) -> bool:
 
 
 
-def update_unknown_id(unknown_id: str, real_id: str) -> bool:
+def update_user_unknown_id(unknown_id: str, real_id: str) -> bool:
 
-    if get_unknown_with_real_id(real_id):
+    if get_user_with_real_id(real_id):
 
         c = conn.cursor()
 
         try: 
-            # c.execute(f'DELETE FROM donates') # Delete All
-            c.execute(f'UPDATE unknowns SET unknown_id = ? WHERE real_id = ?', (unknown_id, real_id, ))
+            c.execute(f'UPDATE users SET unknown_id = ? WHERE real_id = ?', (unknown_id, real_id, ))
             conn.commit()
 
             return True
@@ -147,7 +146,4 @@ def update_unknown_id(unknown_id: str, real_id: str) -> bool:
             c.close()
     
     return None
-
-
-
 

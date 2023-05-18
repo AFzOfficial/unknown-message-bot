@@ -1,7 +1,7 @@
 from pyrogram import Client, filters
 from pyrogram.types import Message
 
-from models import add_unknown, get_unknown_with_real_id
+from models import add_user, get_user_with_real_id
 from utilities import md5_hash
 
 
@@ -12,7 +12,7 @@ from utilities import md5_hash
 async def id(client: Client, message: Message):
     user_id = str(message.chat.id)
 
-    user = get_unknown_with_real_id(user_id)
+    user = get_user_with_real_id(user_id)
 
     if user:
         await message.reply(f'''**Unknown ID:** `{user[1]}`
@@ -23,7 +23,7 @@ async def id(client: Client, message: Message):
     else:
         unknown_id = md5_hash(user_id)
 
-        if add_unknown(user_id, unknown_id):
+        if add_user(user_id, unknown_id):
             await message.reply(f'''**Unknown ID:** `{unknown_id}`
 
 **Others can send you unknown messages with this ID**
